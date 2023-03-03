@@ -1,0 +1,43 @@
+---
+    pool: default
+    
+    trigger:
+      - main
+    
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet restore'
+        inputs:
+          command: 'restore' 
+          projects: ./MusicStore/MusicStore.csproj
+          
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet build'
+        inputs:
+          command: 'build' 
+          projects: ./MusicStore/MusicStore.csproj  
+          packDirectory: '$(Build.ArtifactStagingDirectory)'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet test'
+        inputs:
+          command: 'build' 
+          projects: ./MusicStoreTest/MusicStoreTest.csproj  
+          publishTestResults: true
+          packDirectory: '$(Build.ArtifactStagingDirectory)' 
+               
+      - task: DotNetCoreCLI@2
+        displayName: 'dotnet test'
+        inputs:
+          command: 'test' 
+          projects: ./MusicStoreTest/MusicStoreTest.csproj
+      - task: Npm@1
+        displayName: Npm install
+        inputs:
+          command: 'install'
+          workingDir: 'MusicStore/ClientApp/'
+      - task: Npm@1
+        displayName: Npm install
+        inputs:
+          command: 'test'
+          workingDir: 'MusicStore/ClientApp/'      
