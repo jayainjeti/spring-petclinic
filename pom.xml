@@ -383,4 +383,13 @@
     </profile>
   </profiles>
 
+
+<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>a0muylpb304ai-artifactory-primary-0-releases</name>
+        <url>https://jayachandrac.jfrog.io/artifactory/default-libs-release</url>
+    </repository>
+</distributionManagement>
+
 </project>
