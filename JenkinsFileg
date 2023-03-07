@@ -1,0 +1,31 @@
+pipeline {
+    agent { label 'node1' }
+    triggers { pollSCM ('H/30 * * * *') }
+    parameters {
+        choice(name: 'Graddle_goal', choices: ['build', 'install', 'clean'], description: 'Graddle Goal')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', url: 'https://github.com/jayainjeti/spring-petclinic.git'
+
+                sh 'export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH" && ./gradlew  build' 
+            }
+        }
+
+        stage('cp jar file') {
+            steps {
+                sh 'mkdir -p /tmp/archive/$JOB_NAME/${BUILD_ID} && cp **/libs/spring-petclinic-3.0.0.jar /tmp/archive/$JOB_NAME/${BUILD_ID}/ &&  aws s3 cp /tmp/archive/$JOB_NAME/${BUILD_ID}/spring-petclinic-3.0.0-SNAPSHOT.jar s3://jayachandra '
+            }
+        }    
+
+    stage('post build') {
+            steps {
+                    junit '**/test-results/test/TEST-*.xml'
+                    archiveArtifacts '**/libs/spring-petclinic-3.0.0.jar'
+                    mail bcc: '', body: 'this is a test mail', cc: '', from: '', replyTo: '', subject: 'test', to: 'jaya.injeti@gmail.com'
+                }
+            }
+        }
+    }
+

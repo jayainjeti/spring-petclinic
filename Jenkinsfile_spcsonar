@@ -1,0 +1,41 @@
+pipeline {
+    agent { label 'node1' }
+    triggers { pollSCM ('H/30 * * * *') }
+    
+    stages {
+        stage('Build') {
+            steps {
+                git branch: 'main', url: 'https://github.com/jayainjeti/spring-petclinic.git'
+                mail body: "The Build has been Started Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'Build Started', to: 'jaya.injeti@gmail.com'
+                sh 'export PATH="/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin:$PATH" && ./mvnw  package' 
+                mail body: "The Build has been Completed Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'Build Completed', to: 'jaya.injeti@gmail.com'
+
+            }
+        }
+
+        stage('sonar analysis') {
+               steps {
+                   // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+                       mail body: "The SCA has been Started Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'SCA Started', to: 'jaya.injeti@gmail.com'
+
+                   withSonarQubeEnv('SonarCloud') {
+                       sh './mvnw clean package sonar:sonar -Dsonar.organization=springpet' -Dsonar.projectKey=springpetc
+                        mail body: "The SCA has been Completed Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'SCA Completed', to: 'jaya.injeti@gmail.com'
+
+                   }
+               }
+           }
+
+       
+
+
+    stage('post build') {
+            steps {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                    mail bcc: '', body: "Reports published ${BUILD_URL}", cc: '', from: '', replyTo: '', subject: 'Reports Published', to: 'jaya.injeti@gmail.com'
+                }
+            }
+        }
+    }
+
