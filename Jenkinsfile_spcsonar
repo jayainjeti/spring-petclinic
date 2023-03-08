@@ -19,7 +19,7 @@ pipeline {
                        mail body: "The SCA has been Started Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'SCA Started', to: 'jaya.injeti@gmail.com'
 
                    withSonarQubeEnv('SonarCloud') {
-                       sh './mvnw clean package sonar:sonar -Dsonar.organization=springpet' -Dsonar.projectKey=springpetc
+                       sh './mvnw clean package sonar:sonar -Dsonar.organization=springpet -Dsonar.projectKey=springpetc'
                         mail body: "The SCA has been Completed Please click this URL to see complete OUTPUT ${BUILD_URL}", subject: 'SCA Completed', to: 'jaya.injeti@gmail.com'
 
                    }

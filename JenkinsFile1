@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'JDK_17' }
+    agent { label 'node1' }
     triggers { pollSCM ('* * * * *') }
     parameters {
         choice(name: 'MAVEN_GOAL', choices: ['package', 'install', 'clean'], description: 'Maven Goal')
@@ -35,9 +35,7 @@ pipeline {
             }
         }
         stage('package') {
-            tools {
-                jdk 'JDK_17'
-            }
+        
             steps {
                 rtMavenRun (
                     tool: 'MAVEN_DEFAULT',
