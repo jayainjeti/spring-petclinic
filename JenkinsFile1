@@ -22,15 +22,15 @@ pipeline {
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "ARTIFACTORY_SERVER",
-                    releaseRepo: 'libs-release',
-                    snapshotRepo: 'libs-snapshot'
+                    releaseRepo: 'jai-libs-release',
+                    snapshotRepo: 'jai-libs-snapshot'
                 )
 
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",
                     serverId: "ARTIFACTORY_SERVER",
-                    releaseRepo: 'libs-release',
-                    snapshotRepo: 'libs-snapshot'
+                    releaseRepo: 'jai-libs-release',
+                    snapshotRepo: 'jai-libs-snapshot'
                 )
             }
         }
