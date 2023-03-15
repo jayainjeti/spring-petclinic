@@ -1,6 +1,6 @@
 pipeline{
     agent { label'node1' }
-    trigger { poolSCM('* * * * *') }
+    triggers { pollSCM('* * * * *') }
     stages {
         stage ('vcs'){
             steps {
@@ -11,6 +11,8 @@ pipeline{
         stage ('downloading jar file from s3 '){
             steps {
                 sh 'wget https://jayachandra.s3.ap-south-1.amazonaws.com/spring-petclinic-3.0.0.jar'
+                sh 'sudo cp spring.service /etc/systemd/system/'
+                sh 'cat spring.service'
                 sh 'sudo systemctl enable spring.service'
             }
         }
