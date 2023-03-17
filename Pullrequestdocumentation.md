@@ -5,10 +5,8 @@ Pull Request
 * If we want to test the pull request we verify it by building the changes done by others and if want make this automatically in Jenkins we configure it with a plugin called ' Github Pull request Builder '.
 
 
-  ![preview](images/1.png)
-
-  * After installing the plugin and restarting the Jenkins we configure the plugin with GitHub Token 
-
+![preview](images/1.png)
+* After installing the plugin and restarting the Jenkins we configure the plugin with GitHub Token 
 
 ![preview](images/2.png)
 
@@ -21,13 +19,14 @@ Pull Request
 
 * Now we take a new free style project and configure it as follows.
 
+![pre](images/10.png)
+
 ![preview](images/3.png)
 
 ![preview](images/4.png)
 ![preview](images/5.png)
 
-![preview]
-![preview]
+* Once you have Save the job with above configuration the build gets automatically trigerred when ever a new pull 
 
 ### References:
 
