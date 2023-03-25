@@ -1,0 +1,18 @@
+creating ci/cd for the spring-pet Clinic
+-----------------------------------------
+
+* install jenkins on the jenkins master node
+[refer here](https://www.jenkins.io/doc/book/installing/linux/)
+* we have to sonar scan so install sonar plugin scanner and cofigure it.
+* ![preview](IMAGES/spc1.png)
+* configure sonarqube on the configuration system
+* ![preview](IMAGES/spc8.png)
+* And then configure node as a jenkins slave.
+* we have to add credentials for the node in manage jenkins,and in credentials.
+* ![preview](IMAGES/spc2.png)
+* ![preview](IMAGES/spc3.png)
+* ![preview](IMAGES/spc4.png)
+* and then go to 'manege nodes and cloude' in manage jenkins
+* ![preview](IMAGES/spc5.png)
+* ![preview](IMAGES/spc6.png)
+* ![preview](IMAGES/spc7.png)

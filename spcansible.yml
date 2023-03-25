@@ -1,0 +1,20 @@
+---
+- name: deploying spc in  ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: getting spc package
+      ansible.builtin.get_url:
+        url: 'https://sai-22.s3.ap-south-1.amazonaws.com/spring-petclinic-3.0.0-SNAPSHOT.jar'
+        dest: /home/sai/
+        mode: '0777'
+    - name: copy the service file
+      ansible.builtin.copy:
+        src: spc.service
+        dest: /etc/systemd/system
+        mode: '0777'
+    - name: restart deamon
+      ansible.builtin.systemd:
+        name: spc.service
+        daemon_reload: true
+        state: restarted    
