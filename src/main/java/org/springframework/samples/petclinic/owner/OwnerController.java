@@ -80,8 +80,7 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/find")
-	public String initFindForm(Map<String, Object> model) {
-		model.put("owner", new Owner());
+	public String initFindForm() {
 		return "owners/findOwners";
 	}
 
@@ -112,7 +111,6 @@ class OwnerController {
 	}
 
 	private String addPaginationModel(int page, Model model, Page<Owner> paginated) {
-		model.addAttribute("listOwners", paginated);
 		List<Owner> listOwners = paginated.getContent();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", paginated.getTotalPages());
